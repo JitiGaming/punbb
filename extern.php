@@ -60,7 +60,12 @@ define('FORUM_QUIET_VISIT', 1);
 
 if (!defined('FORUM_ROOT'))
 	define('FORUM_ROOT', './');
-require FORUM_ROOT.'include/common.php';
+if (!@include(FORUM_ROOT.'include/common.php')) {
+    header('Content-Type: text/xml; charset=utf-8');
+    echo '<?xml version="1.0" encoding="utf-8"?><error>Erreur : Fichier common.php manquant ou chemin incorrect.</error>';
+    exit;
+}
+
 
 ($hook = get_hook('ex_start')) ? eval($hook) : null;
 
